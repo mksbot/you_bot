@@ -7,20 +7,6 @@ cor = [Fore.LIGHTYELLOW_EX + Back.BLACK, Fore.LIGHTBLUE_EX + Back.BLACK, Fore.GR
        Fore.MAGENTA + Back.BLACK, Back.BLACK, Fore.LIGHTRED_EX + Back.BLACK]
 r = [Fore.RESET, Style.RESET_ALL, Back.RESET]
 
-def baixarmp3(link, itag):
-    yt = YouTube(link)
-    yt.streams.filter(only_audio=True)
-    video = yt.streams.get_by_itag(itag)
-    out_file = video.download()
-    base, ext = os.path.splitext(out_file)
-    new_file = base + '.mp3'
-    nome = str(new_file[new_file.find('bot3') + 6:])
-    try:
-        os.rename(out_file, new_file)
-    except:
-        pass
-    print(yt.title + " Baixado com sucesso")
-    return str(nome)
 
 def pergunta(text):
 
