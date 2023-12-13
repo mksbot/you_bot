@@ -16,7 +16,7 @@ from telebot.callback_data import CallbackDataFilter
 
 from filters import calendar_factory, calendar_zoom, bind_filters
 from fun.arquivos_texto import abrir_reg
-from fun.solicitaçoes import baixarmp3
+from fun.solicitacoes import baixarmp3
 from keyboards import EMTPY_FIELD, botao, pesquisas, products_keyboard, products_factory, \
     back_keyboard
 from telebot import types
