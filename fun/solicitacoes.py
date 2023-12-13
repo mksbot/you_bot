@@ -14,7 +14,7 @@ def baixarmp3(link, itag):
     out_file = video.download()
     base, ext = os.path.splitext(out_file)
     new_file = base + '.mp3'
-    nome = str(new_file[new_file.find('bot3') + 5:])
+    nome = str(new_file[new_file.find('bot3') + 6:])
     try:
         os.rename(out_file, new_file)
     except:
