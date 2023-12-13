@@ -55,34 +55,37 @@ class Baixar:
 
 @bot.callback_query_handler(func=lambda call: call.data == EMTPY_FIELD)
 async def products_callback(call: types.CallbackQuery):
-    id_arq = (int(call.message.id)-2)
+    id_arq = (int(call.message.id) - 2)
     markup = await bot.reply_to(call.message, '💾  Baixando.... ⏳'.upper())
     c = 0
-    async def enviar (c):
+
+    async def enviar(c):
         try:
             nome = abrir_reg(f'{id_arq}')
             musica = open(nome, 'rb')
         except:
             time.sleep(1)
-            await bot.edit_message_text(f'🌐 Enviando....{"."*c}♻️'.upper(), markup.chat.id,
+            await bot.edit_message_text(f'🌐 Enviando....{"." * c}♻️'.upper(), markup.chat.id,
                                         markup.message_id)
             print('tentando')
             c += 1
             await enviar(c)
         else:
             await bot.edit_message_text('🌐 Enviando....♻️'.upper(), markup.chat.id,
-                                    markup.message_id)
+                                        markup.message_id)
 
             await bot.send_audio(call.message.chat.id, musica)
             await bot.edit_message_text(' ✅'.upper(), markup.chat.id, markup.message_id)
-            await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='🧿 Enviado '
-                                                                                                       'com Sucesso ✔️',
-                                reply_markup=botao())
+            await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                        text='🧿 Enviado '
+                                             'com Sucesso ✔️',
+                                        reply_markup=botao())
             # os.remove('info.json')
             musica.close()
             os.remove(nome)
 
     await enviar(c)
+
 
 @bot.message_handler(func=lambda message: True)
 async def products_command_handler(message: types.Message):
