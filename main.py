@@ -93,7 +93,6 @@ async def products_command_handler(message: types.Message):
     texto = message.text
     if 'https' in texto:
         nome, imagem = Baixar(texto).info()
-        print(imagem)
         await bot.send_photo(message.chat.id, f'{imagem}', f'{nome}')
         await bot.send_message(message.chat.id, '🧿 Escolha Um Formato! 👇',
                                reply_markup=botao())
