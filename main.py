@@ -26,11 +26,18 @@ API_TOKEN = '6159093978:AAEyVQZYRBA2YYkX6GNwl9ypGBWHYGUwNz4'
 bot = AsyncTeleBot(API_TOKEN)
 
 print('ESPERANDO..')
+
+
 @bot.message_handler(commands='start')
 async def start_command_handler(message: types.Message):
     await bot.send_message(message.chat.id,
                            f"Hello {message.from_user.first_name}. This bot is an example of calendar keyboard."
                            "\nPress /calendar to see it.")
+
+
+@bot.message_handler(commands='QUITT')
+async def start_command_handler(message: types.Message):
+    quit()
 
 
 @bot.callback_query_handler(func=lambda call: call.data == EMTPY_FIELD)
