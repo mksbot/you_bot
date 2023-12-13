@@ -39,49 +39,48 @@ if __name__ == '__main__':
     print(pesquisas('funk'))
 
 
-def qualidade(link):
-    yt = YouTube(link)
-    dcn = lambda nm, el: {nm: el}
-    exten2 = []
-    try:
-        idd = int(abrir_reg('ids', True))
-    except:
-        idd = 0
-    for stream in yt.streams.filter(only_audio=True):
-        exten = {}
-        itag = stream.itag
-
-        # tip=f'{stream.mime_type}{str(stream)[str(stream).find("res=") + 4:(str(stream).find("res=") + 10)]}'.replace(
-        #         "\"", '|')
-
-        tip = f'🎙 MP3 | {stream.abr}'
-        exten.update(dcn('id', idd))
-        exten.update(dcn('nome', tip))
-        exten.update(dcn('itag', itag))
-        exten.update(dcn('link', link))
-        exten2.append(exten)
-        n = str(idd / 4)
-        print(idd)
-        if '75' in n:
-            print('>>', n)
-            idd += 1
-            break
-        else:
-            print('..')
-            idd += 1
-    print(exten2)
-    registro(idd, 'ids', True)
-    registro(exten2, 'info')
-    item = abrir_reg('info')
-    marca = len(item)
-    cont = 0
-    itens = []
-    for it in item:
-        if cont > marca - 5:
-            itens.append(it)
-        cont += 1
-
-    return itens
+# def qualidade(link):
+#     yt = YouTube(link)
+#     dcn = lambda nm, el: {nm: el}
+#     exten2 = []
+#     try:
+#         idd = int(abrir_reg('ids', True))
+#     except:
+#         idd = 0
+#     for stream in yt.streams.filter(only_audio=True):
+#         exten = {}
+#         itag = stream.itag
+#
+#         # tip=f'{stream.mime_type}{str(stream)[str(stream).find("res=") + 4:(str(stream).find("res=") + 10)]}'.replace(
+#         #         "\"", '|')
+#
+#         tip = f'🎙 MP3 | {stream.abr}'
+#         exten.update(dcn('id', idd))
+#         exten.update(dcn('nome', tip))
+#         exten.update(dcn('itag', itag))
+#         exten.update(dcn('link', link))
+#         exten2.append(exten)
+#         n = str(idd / 4)
+#         print(idd)
+#         if '75' in n:
+#             print('>>', n)
+#             idd += 1
+#             break
+#         else:
+#             print('..')
+#             idd += 1
+#     registro(idd, 'ids', True)
+#     registro(exten2, 'info')
+#     item = abrir_reg('info')
+#     marca = len(item)
+#     cont = 0
+#     itens = []
+#     for it in item:
+#         if cont > marca - 5:
+#             itens.append(it)
+#         cont += 1
+#
+#     return itens
 
 
 def botao():
@@ -89,10 +88,9 @@ def botao():
     from telebot.util import quick_markup
 
     botao2 = quick_markup({
-        'Twitter': {'url': 'https://twitter.com'},
-        'Facebook': {'url': 'https://facebook.com'},
-        'Back': {'callback_data': EMTPY_FIELD},
-        'inline': {'switch_inline_query': 'olaaa'}
+
+        'Baixar MP3': {'callback_data': EMTPY_FIELD},
+
     }, row_width=2)
     # {
     #     'url': None,
@@ -113,21 +111,21 @@ def botao():
     return botao2
 
 
-def products_keyboard(link='', ids=0):
-    lk = qualidade(link)
-
-    return types.InlineKeyboardMarkup(
-        keyboard=[
-            [
-                types.InlineKeyboardButton(
-                    text=product['nome'],
-                    callback_data=products_factory.new(product_id=product["id"])
-                )
-            ]
-            for product in lk
-        ]
-    )
-
+# def products_keyboard(link='', ids=0):
+#     lk = qualidade(link)
+#
+#     return types.InlineKeyboardMarkup(
+#         keyboard=[
+#             [
+#                 types.InlineKeyboardButton(
+#                     text=product['nome'],
+#                     callback_data=products_factory.new(product_id=product["id"])
+#                 )
+#             ]
+#             for product in lk
+#         ]
+#     )
+#
 
 def back_keyboard():
     return types.InlineKeyboardMarkup(
