@@ -8,7 +8,7 @@ import numpy as np
 def registro(registrar, nome='arq01', nun=False):
     if nun:
         with open(f'{nome}.txt', 'w') as arquivo:
-            arquivo.write(f'{registrar}\n')
+            arquivo.write(f'{registrar}')
             arquivo.close()
 
     else:
