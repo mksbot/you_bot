@@ -16,7 +16,6 @@ from telebot.callback_data import CallbackDataFilter
 
 from filters import calendar_factory, calendar_zoom, bind_filters
 from fun.arquivos_texto import abrir_reg
-from fun.solicitacoes import baixarmp3
 from keyboards import EMTPY_FIELD, botao, pesquisas, products_keyboard, products_factory, \
     back_keyboard
 from telebot import types
@@ -26,6 +25,23 @@ API_TOKEN = '6159093978:AAEyVQZYRBA2YYkX6GNwl9ypGBWHYGUwNz4'
 bot = AsyncTeleBot(API_TOKEN)
 
 print('ESPERANDO..')
+
+
+def baixarmp3(link, itag):
+    yt = YouTube(link)
+    yt.streams.filter(only_audio=True)
+    video = yt.streams.get_by_itag(itag)
+    out_file = video.download()
+    base, ext = os.path.splitext(out_file)
+    new_file = base + '.mp3'
+    nome = out_file.replace('.mp4', '') + '.mp3'
+    try:
+        os.rename(out_file, new_file)
+    except:
+        os.remove(out_file)
+    print(yt.title + " Baixado com sucesso")
+
+    return nome
 
 
 @bot.message_handler(commands='start')
@@ -90,7 +106,8 @@ async def products_callback(call: types.CallbackQuery):
     await bot.edit_message_text('🌐 Enviando.... ♻️'.upper(), markup.chat.id, markup.message_id)
 
     musica = open(nome, 'rb')
-    await bot.send_audio(call.message.chat.id, musica), bot.edit_message_text('🌐 Enviando....'.upper(), markup.chat.id, markup.message_id)
+    await bot.send_audio(call.message.chat.id, musica), bot.edit_message_text('🌐 Enviando....'.upper(), markup.chat.id,
+                                                                              markup.message_id)
     await bot.edit_message_text(' ✅'.upper(), markup.chat.id, markup.message_id)
     await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='🧿 Enviado '
                                                                                                        'com Sucesso ✔️',
@@ -117,6 +134,8 @@ class ProductsCallbackFilter(AdvancedCustomFilter):
 
     async def check(self, message: types.CallbackQuery, config: CallbackDataFilter):
         return config.check(query=message)
+
+
 bot.add_custom_filter(ProductsCallbackFilter())
 if __name__ == '__main__':
     bind_filters(bot)
