@@ -113,8 +113,9 @@ async def default_query(inline_query):
 @bot.message_handler(commands='start')
 async def start_command_handler(message: types.Message):
     await bot.send_message(message.chat.id,
-                           f"Hello {message.from_user.first_name}. This bot is an example of calendar keyboard."
-                           "\nPress /calendar to see it.")
+                           f"Olá! {message.from_user.first_name} Vou baixar músicas do You tube."
+                            "\nPara fazer isso, envie-me o link do vídeo"
+                            "ou use @pesquisar e click no vídeo!")
 
 
 @bot.message_handler(commands='QUITT')
