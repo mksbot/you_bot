@@ -270,12 +270,18 @@ async def default_query(inline_query):
 @bot.message_handler(commands='start')
 async def start_command_handler(message: types.Message):
     await bot.send_message(message.chat.id,
+<<<<<<< HEAD
                            f"Ola {message.from_user.first_name}. Para usat este bot entre no nosso grupo: "
                            , reply_markup=quick_markup({
 
                             'Entrar no Grupo': {'url': 'https://t.me/+eGIsvENJighiNGNh'},
 
                         }, row_width=2))
+=======
+                           f"Olá! {message.from_user.first_name} Vou baixar músicas do You tube."
+                            "\nPara fazer isso, envie-me o link do vídeo"
+                            "ou use @pesquisar e click no vídeo!")
+>>>>>>> bcad0c2933aac77e1b976bc0931641f2e413329f
 
 
 @bot.message_handler(commands='QUITT')
