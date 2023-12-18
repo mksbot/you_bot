@@ -1,86 +1,189 @@
-import calendar
+import random
+import time
 from pprint import pprint
 
-from youtubesearchpython import VideosSearch
-from datetime import date, timedelta
-from pytube import Search, YouTube
-
+import requests
+from bs4 import BeautifulSoup
 from telebot import types
 from telebot.callback_data import CallbackData
-
-from filters import calendar_factory, calendar_zoom
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import InlineKeyboardMarkup
+from telebot.util import quick_markup
 
 from fun.arquivos_texto import registro, abrir_reg
 
 EMTPY_FIELD = '1'
-WEEK_DAYS = [calendar.day_abbr[i] for i in range(7)]
-MONTHS = [(i, calendar.month_name[i]) for i in range(1, 13)]
-products_factory = CallbackData('product_id', prefix='products')
 
+products_factory = CallbackData('product_id', prefix='products')
+mau_elementos = (
+                            "a,b,c,ç,Ç,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,"
+                            "Y,Z,À,Á,Â,Ä,Å,Ã,Æ,Ç,É,È,Ê,Ë,Í,Ì,Î,Ï,Ñ,Ó,Ò,Ô,Ö,Ø,Õ,O,E,Ú,Ù,Û,Ü,Ý,Y à,á,â,ä,å,ã,æ,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,"
+                           "ô,ö,ø,õ,o,e,ú,ù,û,ü,ý,y".replace(',', ' ').split())
 
 def pesquisas(texto):
-    videosSearch = VideosSearch(texto, limit=40)
-    pesquisar = dict(videosSearch.result())
+    page = f'https://animefire.plus/pesquisar/{str(texto)}'
+    print(page)
+    hesders = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
+                      'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 
+    site = requests.get(page, headers=hesders)
+    soup = BeautifulSoup(site.content, 'html.parser')
+    magnet2 = soup.find_all('div', class_='row ml-1 mr-1')
+    i = 1
+    lista2 = []
+    lista_inline = []
+    for v in magnet2[0]:
+
+        try:
+            nome = str(v['title']).replace('- Todos os Episódios', '')
+        except:
+            pass
+        else:
+            lista_inline2 = []
+            link = v.a['href']
+            imagem = v.a.img['data-src']
+            print(link)
+
+            lista_inline2.append(nome)
+            lista_inline2.append(imagem)
+            lista_inline2.append(link)
+            lista_inline.append(lista_inline2)
+
+    pesquisar = lista_inline
     itens = []
-    for n, v in enumerate(pesquisar['result']):
-        thumbnail_url = v['thumbnails'][0]['url']
-        titulo = v['title']
-        url = v['link']
-        # print(titulo, thumbnail_url)
+    for n, v in enumerate(pesquisar):
+        titulo, thumbnail_url, url = pesquisar[n]
+
         itens.append(types.InlineQueryResultArticle(f'{n}', f'{titulo}',
-                                           types.InputTextMessageContent(url),
-                                           thumbnail_url=f'{thumbnail_url}'))
+                                                    types.InputTextMessageContent(url),
+                                                    thumbnail_url=f'{thumbnail_url}'))
     return itens
 
 
-if __name__ == '__main__':
-    print(pesquisas('funk'))
+
+def enviar(link):
+    descriçao = ''
+    tag = ''
+    hesders = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
+                      'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
+    site = requests.get(link, headers=hesders)
+    soup = BeautifulSoup(site.content, 'html.parser')
+    magnet2 = soup.find_all('div', class_='sub_animepage_img')
+    lista2 = []
+    for d in magnet2[0]:
+        try:
+            nome = d['alt']
+            imagem = d['data-src']
+            print(imagem, '\n',
+                  nome)
+        except:
+            pass
+    site = requests.get(link, headers=hesders)
+    soup = BeautifulSoup(site.content, 'html.parser')
+    magnet2 = soup.find_all('div', class_='div_video_list')
+    cont = 0
+    lista = []
+    botao_dict = {}
+    if len(magnet2[0]) > 42:
+        for c in nome:
+            if c not in mau_elementos:
+                if tag == '':
+                    tag = nome.replace(str(c), '_')
+                else:
+                    tag = tag.replace(str(c), '_')
+        if 'Dub' in nome or 'DUB' in nome or 'dub' in nome:
+            idioma = ' #DUB'
+        else:
+            idioma = ' #LEG'
+        descriçao = (
+            f'     ✅{nome}\n'
+            f'{"_" * (len(nome) + 5)}\n\n'
+            f'#{tag[:24].replace("__", "_")}..\n'
+            f'🎞 Episodios - {len(magnet2[0])}   |   '
+            f'🇧🇷{idioma}'
+        )
+        # print(descriçao)
+        botao_dict[f'{nome[:8]}'] = {'url': link}
+    else:
+        for d in magnet2[0]:
+            try:
+                nome1 = str(d.text)
+                if len(nome1) >= 3:
+                    episodio = nome1[nome1.find('- ') + 2:]
+                    num = episodio.find('- ')
+                    if num != -1:
+                        episodio = episodio[:num]
+                    link = d['href']
+                    print('>>', episodio)
+                    site = requests.get(link, headers=hesders)
+                    soup = BeautifulSoup(site.content, 'html.parser')
+                    magnet2 = soup.find_all('div', id='div_video')
+
+                    for j in magnet2[0]:
+
+                        try:
+                            try:
+                                link2 = j.video['data-video-src']
+                            except:
+                                pass
+                                link2 = j.iframe['src']
+                        except:
+                            pass
+                        else:
+                            tratar_link = requests.get(link2)
+                            links = str(tratar_link.text)
+                            link3 = link2
+                            if len(links) < 500:
+                                inicio = links.find('http', 150)
+                                if inicio <= -1:
+                                    if len(links) <= 160:
+                                        inicio = links.find('http')
+                                    else:
+                                        inicio = links.find('http', 30)
+                                fim = links.find('label', inicio)
+                                link3 = links[inicio:fim - 3].replace('\/', '/')
+
+                            for c in nome:
+                                if c not in mau_elementos:
+                                    if tag == '':
+                                        tag = nome.replace(str(c), '_')
+                                    else:
+                                        tag = tag.replace(str(c), '_')
+                            if 'Dub' in nome or 'DUB' in nome or 'dub' in nome:
+                                idioma = ' #DUB'
+                            else:
+                                idioma = ' #LEG'
+                            descriçao = (
+                                         f'     ✅{nome}\n'
+                                         f'{"_" * (len(nome) + 5)}\n\n'
+                                         f'#{tag[:24].replace("__", "_")}..\n'
+                                         f'🎞{episodio.replace("o", "os")}   |   '
+                                         f'🇧🇷{idioma}'
+                                         )
+                            # print(descriçao)
+                            print(link3)
+                            botao_dict[f'{episodio}'] = {'url': link3}
+
+            except:
+                pass
+    botao2 = quick_markup(botao_dict, row_width=3)
+    print(descriçao)
+    lista.append(descriçao)
+    lista.append(imagem)
+    lista2.append(lista)
+    lista2.append(botao2)
+    cont += 1
+    return lista2
 
 
-# def qualidade(link):
-#     yt = YouTube(link)
-#     dcn = lambda nm, el: {nm: el}
-#     exten2 = []
-#     try:
-#         idd = int(abrir_reg('ids', True))
-#     except:
-#         idd = 0
-#     for stream in yt.streams.filter(only_audio=True):
-#         exten = {}
-#         itag = stream.itag
-#
-#         # tip=f'{stream.mime_type}{str(stream)[str(stream).find("res=") + 4:(str(stream).find("res=") + 10)]}'.replace(
-#         #         "\"", '|')
-#
-#         tip = f'🎙 MP3 | {stream.abr}'
-#         exten.update(dcn('id', idd))
-#         exten.update(dcn('nome', tip))
-#         exten.update(dcn('itag', itag))
-#         exten.update(dcn('link', link))
-#         exten2.append(exten)
-#         n = str(idd / 4)
-#         print(idd)
-#         if '75' in n:
-#             print('>>', n)
-#             idd += 1
-#             break
-#         else:
-#             print('..')
-#             idd += 1
-#     registro(idd, 'ids', True)
-#     registro(exten2, 'info')
-#     item = abrir_reg('info')
-#     marca = len(item)
-#     cont = 0
-#     itens = []
-#     for it in item:
-#         if cont > marca - 5:
-#             itens.append(it)
-#         cont += 1
-#
-#     return itens
+
+# if __name__ == '__main__':
+#     enviar('https://animefire.plus/animes/naruto-shippuuden-todos-os-episodios')
+#     lista2 = enviar('https://animefire.plus/animes/overlord-ii-dublado-todos-os-episodios')
+#     botao2 = lista2[1]
+#     descriçao, imagem = lista2[0]
+#     print(botao2)
 
 
 def botao():
@@ -90,6 +193,8 @@ def botao():
     botao2 = quick_markup({
 
         'Baixar MP3': {'callback_data': EMTPY_FIELD},
+        'Baixar MP4': {'callback_data': EMTPY_FIELD},
+        'Baixar MP5': {'callback_data': EMTPY_FIELD}
 
     }, row_width=2)
     # {
