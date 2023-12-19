@@ -44,15 +44,16 @@ async def calendario_a():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 
-    # site = requests.get(page, headers=hesders)
-    # soup = BeautifulSoup(site.content, 'html.parser')
-    # magnet2 = soup.find_all('div', class_='animation-2 items')
-    # i = 1
-    # lista = []
-    # lista_dub = []
-    #
-    # for v in magnet2[0]:
-    #
+    site = requests.get(page, headers=hesders)
+    soup = BeautifulSoup(site.content, 'html.parser')
+    magnet2 = soup.find_all('div', class_='animation-2 items')
+    i = 1
+    lista = []
+    lista_dub = []
+
+    for v in magnet2[0]:
+        print(v)
+
     #     lista2 = []
     #     informaçoes = str(v.text).replace('do ', 'do >')
     #     num = informaçoes.find('>')
