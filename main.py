@@ -93,7 +93,7 @@ async def calendario_a():
                 try:
                     link = c['href']
                     site = requests.get(link, headers=hesders)
-                    soup = BeautifulSoup(site.content, 'html.parser')
+                    soup = BeautifulSoup(site.content.decode('utf-8'), 'html.parser')
                     magnet2 = soup.find_all('div', class_='play-box-iframe fixidtab')
                     link2 = magnet2[0].iframe['src']
 
