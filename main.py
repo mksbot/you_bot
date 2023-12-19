@@ -64,23 +64,23 @@ async def calendario_a():
             "Y,Z,À,Á,Â,Ä,Å,Ã,Æ,Ç,É,È,Ê,Ë,Í,Ì,Î,Ï,Ñ,Ó,Ò,Ô,Ö,Ø,Õ,O,E,Ú,Ù,Û,Ü,Ý,Y à,á,â,ä,å,ã,æ,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,"
             "ô,ö,ø,õ,o,e,ú,ù,û,ü,ý,y".replace(',', ' ').split())
         tag = ''
-        print(nome)
-    #     for c in nome:
-    #         if c not in mau_elementos:
-    #             if tag == '':
-    #                 tag = nome.replace(str(c), '_')
-    #             else:
-    #                 tag = tag.replace(str(c), '_')
-    #     idioma = informaçoes[1:5].upper()
-    #     descriçao = (f'> Fonte--1'
-    #                  f'\n\n'
-    #                  f'     ✅{nome}\n'
-    #                  f'{"_" * (len(nome) + 10)}\n\n'
-    #                  f'#{tag[:24].replace("__", "_")}..\n'
-    #                  f'🎞{episodio}   |   '
-    #                  f'🇧🇷{idioma}'
-    #                  )
-    #     # print(descriçao)
+
+        for c in nome:
+            if c not in mau_elementos:
+                if tag == '':
+                    tag = nome.replace(str(c), '_')
+                else:
+                    tag = tag.replace(str(c), '_')
+        idioma = informaçoes[1:5].upper()
+        descriçao = (f'> Fonte--1'
+                     f'\n\n'
+                     f'     ✅{nome}\n'
+                     f'{"_" * (len(nome) + 10)}\n\n'
+                     f'#{tag[:24].replace("__", "_")}..\n'
+                     f'🎞{episodio}   |   '
+                     f'🇧🇷{idioma}'
+                     )
+        print(descriçao)
     #     try:
     #         reg = abrir_reg('animes')
     #     except:
