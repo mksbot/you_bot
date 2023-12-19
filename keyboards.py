@@ -54,9 +54,9 @@ def pesquisas(texto):
     for n, v in enumerate(pesquisar):
         titulo, thumbnail_url, url = pesquisar[n]
         if 'Dub' in titulo or 'DUB' in titulo or 'dub' in titulo:
-            titulo = f'{titulo[:30]}..(DUBLADO)'
+            titulo = f'{titulo[:34]}(DUBLADO)'
         else:
-            titulo = f'{titulo[:30]}..(LEGENDADO)'
+            titulo = f'{titulo[:34]}(LEGENDADO)'
 
         itens.append(types.InlineQueryResultArticle(f'{n}', f'{titulo}',
                                                     types.InputTextMessageContent(url),
