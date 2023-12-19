@@ -88,7 +88,7 @@ async def calendario_a():
             reg = abrir_reg('animes')
         if str(nome + episodio) not in reg:
             lista2.append(descriçao)
-            print(lista)
+            print(lista2)
     #         for c in v.div:
     #
     #             try:
