@@ -20,7 +20,7 @@ mau_elementos = (
                            "ô,ö,ø,õ,o,e,ú,ù,û,ü,ý,y".replace(',', ' ').split())
 
 def pesquisas(texto):
-    page = f'https://animefire.plus/pesquisar/{str(texto)}'
+    page = f'https://animefire.plus/pesquisar/{str(texto).replace(" ", "-")}'
     print(page)
     hesders = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
