@@ -236,7 +236,7 @@ async def query_text(inline_query):
 async def products_command_handler(message: types.Message):
     print(message.chat.id)
     texto = message.text
-    if 'https' in texto:
+    if 'animefire' in texto:
         markup = await bot.reply_to(message, 'Analizando o link.... ⏳'.upper())
         await bot.delete_message(message.chat.id, message.id)
         lista2 = enviar(texto)
@@ -251,8 +251,7 @@ async def products_command_handler(message: types.Message):
             await bot.send_photo(message.chat.id, f'{imagem}', caption=f'{descriçao}', reply_markup=botao2)
             await bot.edit_message_text('🧿 Enviado com Sucesso ✔️', markup.chat.id, markup.message_id)
             await bot.reply_to(markup, ' ✅'.upper())
-    if 'Atual' in texto:
-        await calendario_a()
+    await calendario_a()
 
 
 
