@@ -80,14 +80,15 @@ async def calendario_a():
                      f'🎞{episodio}   |   '
                      f'🇧🇷{idioma}'
                      )
-        print(descriçao)
-    #     try:
-    #         reg = abrir_reg('animes')
-    #     except:
-    #         registro(f'{nome}{episodio}', 'animes', 'nao')
-    #         reg = abrir_reg('animes')
-    #     if str(nome + episodio) not in reg:
-    #         lista2.append(descriçao)
+        # print(descriçao)
+        try:
+            reg = abrir_reg('animes')
+        except:
+            registro(f'{nome}{episodio}', 'animes', 'nao')
+            reg = abrir_reg('animes')
+        if str(nome + episodio) not in reg:
+            lista2.append(descriçao)
+            print(lista)
     #         for c in v.div:
     #
     #             try:
