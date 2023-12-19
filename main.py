@@ -23,6 +23,17 @@ bot1 = telebot.TeleBot(API_TOKEN[0])
 bot2 = telebot.TeleBot(API_TOKEN[1])
 
 
+@bot.message_handler(commands='start')
+async def start_command_handler(message: types.Message):
+    await bot.send_message(message.chat.id,
+                           f"Ola {message.from_user.first_name}. Para usat este bot entre no nosso grupo:\n https://t.me/+eGIsvENJighiNGNh ")
+
+
+@bot.message_handler(commands='QUITT')
+async def start_command_handler(message: types.Message):
+    quit()
+
+    
 async def calendario_a():
     chat_testes = -1002073463326
     chat = -1002000136655
@@ -265,17 +276,6 @@ async def default_query(inline_query):
         await bot.answer_inline_query(inline_query.id, [r])
     except Exception as e:
         print(e)
-
-
-@bot.message_handler(commands='start')
-async def start_command_handler(message: types.Message):
-    await bot.send_message(message.chat.id,
-                           f"Ola {message.from_user.first_name}. Para usat este bot entre no nosso grupo:\n https://t.me/+eGIsvENJighiNGNh ")
-
-
-@bot.message_handler(commands='QUITT')
-async def start_command_handler(message: types.Message):
-    quit()
 
 
 # # @bot.callback_query_handler(func=lambda call: call.data == EMTPY_FIELD)
