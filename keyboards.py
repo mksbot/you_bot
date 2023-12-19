@@ -29,9 +29,6 @@ def pesquisas(texto):
     site = requests.get(page, headers=hesders)
     soup = BeautifulSoup(site.content, 'html.parser')
     magnet2 = soup.find_all('div', class_='row ml-1 mr-1')
-    print(len(magnet2[0])-3)
-    i = 1
-    lista2 = []
     lista_inline = []
     for v in magnet2[0]:
         try:
@@ -68,7 +65,6 @@ def pesquisas(texto):
                 lista_inline.append(lista_inline2)
 
     pesquisar = lista_inline
-    print(pesquisar)
     itens = []
     for n, v in enumerate(pesquisar):
         titulo, thumbnail_url, url = pesquisar[n]
@@ -76,7 +72,7 @@ def pesquisas(texto):
             titulo = f'{titulo[:35]}(DUBLADO)'
         else:
             titulo = f'{titulo[:35]}(LEGENDADO)'
-
+        print(titulo)
         itens.append(types.InlineQueryResultArticle(f'{n}', f'{titulo}',
                                                     types.InputTextMessageContent(url),
                                                     thumbnail_url=f'{thumbnail_url}'))
