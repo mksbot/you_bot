@@ -205,18 +205,18 @@ async def calendario_a():
     #     else:
     #
     #         print('>> JA FOI ENVIADO !!')
-    lista.reverse()
-    if f'{len(lista)}' not in '0':
-        for num, it in enumerate(lista):
-            descriçao, botao, imagem, nomer = lista[num]
-            print(nomer)
-            print('>> ENVIANDO !!')
-            await asyncio.sleep(random.randint(0, 1))
-            if num % 2 == 0:
-                bot2.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
-            else:
-                bot1.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
-            registro(f'{nomer}', 'animes', 'nao')
+    # lista.reverse()
+    # if f'{len(lista)}' not in '0':
+    #     for num, it in enumerate(lista):
+    #         descriçao, botao, imagem, nomer = lista[num]
+    #         print(nomer)
+    #         print('>> ENVIANDO !!')
+    #         await asyncio.sleep(random.randint(0, 1))
+    #         if num % 2 == 0:
+    #             bot2.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
+    #         else:
+    #             bot1.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
+    #         registro(f'{nomer}', 'animes', 'nao')
 
 # -*- coding: utf-8 -*-
 """
