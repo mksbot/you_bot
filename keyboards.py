@@ -29,11 +29,11 @@ def pesquisas(texto):
     site = requests.get(page, headers=hesders)
     soup = BeautifulSoup(site.content, 'html.parser')
     magnet2 = soup.find_all('div', class_='row ml-1 mr-1')
+    print(len(magnet2[0])-3)
     i = 1
     lista2 = []
     lista_inline = []
     for v in magnet2[0]:
-
         try:
             nome = str(v['title']).replace('- Todos os Episódios', '')
         except:
@@ -42,14 +42,33 @@ def pesquisas(texto):
             lista_inline2 = []
             link = v.a['href']
             imagem = v.a.img['data-src']
-            print(link)
 
             lista_inline2.append(nome)
             lista_inline2.append(imagem)
             lista_inline2.append(link)
             lista_inline.append(lista_inline2)
+    if len(magnet2[0])-3 >= 46:
+        page = f'https://animefire.plus/pesquisar/{str(texto).replace(" ", "-")}/2'
+        site = requests.get(page, headers=hesders)
+        soup = BeautifulSoup(site.content, 'html.parser')
+        magnet2 = soup.find_all('div', class_='row ml-1 mr-1')
+        for v in magnet2[0]:
+            try:
+                nome = str(v['title']).replace('- Todos os Episódios', '')
+            except:
+                pass
+            else:
+                lista_inline2 = []
+                link = v.a['href']
+                imagem = v.a.img['data-src']
+
+                lista_inline2.append(nome)
+                lista_inline2.append(imagem)
+                lista_inline2.append(link)
+                lista_inline.append(lista_inline2)
 
     pesquisar = lista_inline
+    print(pesquisar)
     itens = []
     for n, v in enumerate(pesquisar):
         titulo, thumbnail_url, url = pesquisar[n]
@@ -182,7 +201,8 @@ def enviar(link):
 
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    pesquisas('tensei')
 #     enviar('https://animefire.plus/animes/naruto-shippuuden-todos-os-episodios')
 #     lista2 = enviar('https://animefire.plus/animes/overlord-ii-dublado-todos-os-episodios')
 #     botao2 = lista2[1]
