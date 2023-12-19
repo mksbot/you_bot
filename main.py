@@ -33,7 +33,7 @@ async def start_command_handler(message: types.Message):
 async def start_command_handler(message: types.Message):
     quit()
 
-    
+
 async def calendario_a():
     chat_testes = -1002073463326
     chat = -1002000136655
