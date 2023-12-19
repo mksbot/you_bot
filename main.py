@@ -45,7 +45,7 @@ async def calendario_a():
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 
     site = requests.get(page, headers=hesders)
-    soup = BeautifulSoup(site.content.decode('latin-1'), 'html.parser')
+    soup = BeautifulSoup(site.content, 'html.parser')
     magnet2 = soup.find_all('div', class_='animation-2 items')
     i = 1
     lista = []
@@ -61,9 +61,9 @@ async def calendario_a():
         episodio = nome[num:]
         nome = nome[:num].upper()
         mau_elementos = (
-            "a,b,c,ç,Ç,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,"
-            "Y,Z,À,Á,Â,Ä,Å,Ã,Æ,Ç,É,È,Ê,Ë,Í,Ì,Î,Ï,Ñ,Ó,Ò,Ô,Ö,Ø,Õ,O,E,Ú,Ù,Û,Ü,Ý,Y à,á,â,ä,å,ã,æ,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,"
-            "ô,ö,ø,õ,o,e,ú,ù,û,ü,ý,y".replace(',', ' ').split())
+            "a,b,c,ç,Ç,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,")
+            # "Y,Z,À,Á,Â,Ä,Å,Ã,Æ,Ç,É,È,Ê,Ë,Í,Ì,Î,Ï,Ñ,Ó,Ò,Ô,Ö,Ø,Õ,O,E,Ú,Ù,Û,Ü,Ý,Y à,á,â,ä,å,ã,æ,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,"
+            # "ô,ö,ø,õ,o,e,ú,ù,û,ü,ý,y".replace(',', ' ').split())
         tag = ''
         for c in nome:
             if c not in mau_elementos:
@@ -93,7 +93,7 @@ async def calendario_a():
                 try:
                     link = c['href']
                     site = requests.get(link, headers=hesders)
-                    soup = BeautifulSoup(site.content.decode('latin-1'), 'html.parser')
+                    soup = BeautifulSoup(site.content, 'html.parser')
                     magnet2 = soup.find_all('div', class_='play-box-iframe fixidtab')
                     link2 = magnet2[0].iframe['src']
 
