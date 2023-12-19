@@ -45,7 +45,7 @@ async def calendario_a():
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 
     site = requests.get(page, headers=hesders)
-    soup = BeautifulSoup(site.content.decode('utf-8'), 'html.parser')
+    soup = BeautifulSoup(site.content.decode('latin-1'), 'html.parser')
     magnet2 = soup.find_all('div', class_='animation-2 items')
     i = 1
     lista = []
@@ -93,7 +93,7 @@ async def calendario_a():
                 try:
                     link = c['href']
                     site = requests.get(link, headers=hesders)
-                    soup = BeautifulSoup(site.content.decode('utf-8'), 'html.parser')
+                    soup = BeautifulSoup(site.content.decode('latin-1'), 'html.parser')
                     magnet2 = soup.find_all('div', class_='play-box-iframe fixidtab')
                     link2 = magnet2[0].iframe['src']
 
