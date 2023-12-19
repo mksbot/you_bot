@@ -23,7 +23,7 @@ bot1 = telebot.TeleBot(API_TOKEN[0])
 bot2 = telebot.TeleBot(API_TOKEN[1])
 
 
-async def calendario_a():
+def calendario_a():
     chat_testes = -1002073463326
     chat = -1002000136655
     # ANIMES LEGENDADOS
@@ -195,7 +195,7 @@ async def calendario_a():
             descriçao, botao, imagem, nomer = lista[num]
             print(nomer)
             print('>> ENVIANDO !!')
-            await asyncio.sleep(random.randint(0, 1))
+            time.sleep(random.randint(0, 1))
             if num % 2 == 0:
                 bot2.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
             else:
