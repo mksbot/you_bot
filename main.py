@@ -23,7 +23,7 @@ bot1 = telebot.TeleBot(API_TOKEN[0])
 bot2 = telebot.TeleBot(API_TOKEN[1])
 
 
-def calendario_a():
+async def calendario_a():
     chat_testes = -1002073463326
     chat = -1002000136655
     # ANIMES LEGENDADOS
@@ -34,7 +34,7 @@ def calendario_a():
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 
     site = requests.get(page, headers=hesders)
-    soup = BeautifulSoup(site.content, 'html.parser')
+    soup = BeautifulSoup(site.content.decode('utf-8'), 'html.parser')
     magnet2 = soup.find_all('div', class_='animation-2 items')
     i = 1
     lista = []
@@ -195,7 +195,7 @@ def calendario_a():
             descriçao, botao, imagem, nomer = lista[num]
             print(nomer)
             print('>> ENVIANDO !!')
-            time.sleep(random.randint(0, 1))
+            await asyncio.sleep(random.randint(0, 1))
             if num % 2 == 0:
                 bot2.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
             else:
