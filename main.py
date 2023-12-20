@@ -140,9 +140,9 @@ async def calendario_a():
             "ô,ö,ø,õ,o,e,ú,ù,û,ü,ý,y".replace(',', ' ').split())
         tag = ''
         if 'Dub' in nome or 'DUB' in nome or 'dub' in nome:
-            idioma = f'(DUB)'
+            idioma = f'#DUB'
         else:
-            idioma = f'(LEG)'
+            idioma = f'#LEG'
         for c in nome:
             if c not in mau_elementos:
                 if tag == '':
