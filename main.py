@@ -31,6 +31,11 @@ async def start_command_handler(message: types.Message):
 
 @bot.message_handler(commands='QUITT')
 async def start_command_handler(message: types.Message):
+    quit()
+
+
+@bot.message_handler(commands='RR')
+async def start_command_handler(message: types.Message):
     restart()
 
 
