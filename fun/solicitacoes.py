@@ -26,7 +26,6 @@ bot2 = telebot.TeleBot(API_TOKEN[1])
 def noticias():
     chat_testes = -1002073463326
     chat = -1002000136655
-    chat = chat_testes
     page = f'https://vocesabianime.com/'
     print(page)
     hesders = {
