@@ -115,8 +115,9 @@ async def calendario_a():
                     pass
         else:
 
-            print('>> JA FOI ENVIADO !!')
+            pass
 
+    print(f'>> Encontrei : [{len(lista)}] Novos Animes!!')
     # ANIMES DUBLADO
     page = f'https://animefire.plus'
     print(page)
@@ -204,8 +205,9 @@ async def calendario_a():
             except:
                 pass
         else:
+            pass
 
-            print('>> JA FOI ENVIADO !!')
+    print(f'>> Encontrei : [{len(lista)}] Novos Animes!!')
     lista.reverse()
     if f'{len(lista)}' not in '0':
         for num, it in enumerate(lista):
