@@ -206,15 +206,13 @@ if __name__ == '__main__':
 #     print(botao2)
 
 
-def botao():
+def botao(texto,    link):
     botao2 = InlineKeyboardMarkup(row_width=7)
     from telebot.util import quick_markup
 
     botao2 = quick_markup({
 
-        'Baixar MP3': {'callback_data': EMTPY_FIELD},
-        'Baixar MP4': {'callback_data': EMTPY_FIELD},
-        'Baixar MP5': {'callback_data': EMTPY_FIELD}
+        texto: {'url': link},
 
     }, row_width=2)
     # {
