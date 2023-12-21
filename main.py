@@ -80,9 +80,10 @@ async def products_command_handler(message: types.Message):
 @bot.inline_handler(lambda query: len(query.query) is 0)
 async def default_query(inline_query):
     try:
+        image = open('photo.jpg', 'r')
         r = types.InlineQueryResultArticle('1', 'Pesquise seu anime favorito:\n'
                                            ,
-                                           types.InputMediaPhoto(open('photo.jpg', 'r'),
+                                           types.InputMediaPhoto(image,
                                                                  '🔎 Pesquise seu anime favorito que enviarei para você! 🌐\n\n'
                                                                  'Exemplo de Uso:👇\n\n'
                                                                  '🔎 digite: @Ani_pesgbot overlord\n\n'
