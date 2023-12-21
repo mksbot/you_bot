@@ -1,7 +1,6 @@
 import os
-
 from colorama import Fore, Back, Style
-from pytube import YouTube
+
 
 cor = [Fore.LIGHTYELLOW_EX + Back.BLACK, Fore.LIGHTBLUE_EX + Back.BLACK, Fore.GREEN + Back.BLACK,
        Fore.MAGENTA + Back.BLACK, Back.BLACK, Fore.LIGHTRED_EX + Back.BLACK]
