@@ -23,9 +23,10 @@ bot1 = telebot.TeleBot(API_TOKEN[0])
 bot2 = telebot.TeleBot(API_TOKEN[1])
 
 
-def noticias():
+async def noticias():
     chat_testes = -1002073463326
     chat = -1002000136655
+    chat =chat_testes
     page = f'https://vocesabianime.com/'
     print(page)
     hesders = {
@@ -47,14 +48,16 @@ def noticias():
             try:
                 reg = abrir_reg('noticias')
             except:
-                registro(titulo, 'noticias', 'nao')
+                registro(titulo, 'noticias','nao')
                 reg = abrir_reg('noticias')
+
             if titulo not in reg:
-                sleep(2)
+                await asyncio.sleep(2)
                 descriçao = (f'✨Novidades Otaku✨'
                              f'\n\n👁‍🗨 {titulo}\n\n'
                              f'#{categoria.replace(" ", "_")}')
-                bot2.send_photo(chat, imagem, caption=descriçao, reply_markup=botao('Saiba Mais', link), )
+                print(f'Enviando: {titulo}')
+                bot2.send_photo(chat, imagem, caption=descriçao, reply_markup=botao('Saiba Mais', link))
                 registro(titulo, 'noticias', 'nao')
 
 

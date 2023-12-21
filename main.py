@@ -84,9 +84,6 @@ async def products_command_handler(message: types.Message):
 async def default_query(inline_query):
     try:
         r = types.InlineQueryResultArticle('1', 'Pesquise seu anime favorito:\n'
-                                                'Exemplo de Uso:👇\n\n'
-                                                '🔎 digite: @Ani_pesgbot naruto\n\n'
-                                                '❗️Não envie a msg)❗️\n\n'
                                            ,
                                            types.InputTextMessageContent(
                                                '🔎 Pesquise seu anime favorito que enviarei para você! 🌐\n\n'
