@@ -83,15 +83,14 @@ async def default_query(inline_query):
         r = types.InlineQueryResultArticle('1', 'Pesquise seu anime favorito:\n'
                                            ,
                                            types.InputTextMessageContent(
-                                                                 '🔎 Pesquise seu anime favorito que enviarei para você! 🌐\n\n'
-                                                                 'Exemplo de Uso:👇\n\n'
-                                                                 '🔎 digite: @Ani_pesgbot overlord\n\n'
-                                                                 '❗️Não envie a msg)❗️\n\n'
-                                                                 '👉Vai aparecer uma lista com os animes na tela: clique no anime e pronto!'),
+                                               '🔎 Pesquise seu anime favorito que enviarei para você! 🌐\n\n'
+                                               'Exemplo de Uso:👇\n\n'
+                                               '🔎 digite: @Ani_pesgbot overlord\n\n'
+                                               '❗️Não envie a msg)❗️\n\n'
+                                               '👉Vai aparecer uma lista com os animes na tela: clique no anime e pronto!'),
                                            thumbnail_url='https://99designs-blog.imgix.net/blog/wp-content/uploads'
                                                          '/2019/10/c1c70663-e19b-4db4-b9e4-caf805d16112'
-                                                         '-e1571876620702.jpg?auto=format&q=60&fit=max&w=930',)
-
+                                                         '-e1571876620702.jpg?auto=format&q=60&fit=max&w=930')
         await bot.answer_inline_query(inline_query.id, [r])
     except Exception as e:
         print(e)
