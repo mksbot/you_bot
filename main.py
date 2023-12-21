@@ -9,6 +9,7 @@ from telebot.async_telebot import AsyncTeleBot
 from fun.solicitacoes import restart, calendario_a, noticias
 from filters import bind_filters
 
+
 from keyboards import pesquisas, enviar
 
 API_TOKEN = ['6812826133:AAHTh_ZzbOSXeKjAedxwpPKJMeuMt6AT-o8',
@@ -36,6 +37,7 @@ async def start_command_handler(message: types.Message):
     restart()
 
 
+
 # -*- coding: utf-8 -*-
 """
 This Example will show you an advanced usage of CallbackData.
@@ -52,6 +54,7 @@ async def query_text(inline_query):
         await bot.answer_inline_query(inline_query.id, pesquisas(inline_query.query))
     except Exception as e:
         print(e)
+
 
 
 @bot.message_handler(func=lambda message: True)
@@ -81,11 +84,14 @@ async def products_command_handler(message: types.Message):
 async def default_query(inline_query):
     try:
         r = types.InlineQueryResultArticle('1', 'Pesquise seu anime favorito:\n'
+                                                'Exemplo de Uso:👇\n\n'
+                                                '🔎 digite: @Ani_pesgbot naruto\n\n'
+                                                '❗️Não envie a msg)❗️\n\n'
                                            ,
                                            types.InputTextMessageContent(
                                                '🔎 Pesquise seu anime favorito que enviarei para você! 🌐\n\n'
                                                'Exemplo de Uso:👇\n\n'
-                                               '🔎 digite: @Ani_pesgbot overlord\n\n'
+                                               '🔎 digite: @Ani_pesgbot naruto\n\n'
                                                '❗️Não envie a msg)❗️\n\n'
                                                '👉Vai aparecer uma lista com os animes na tela: clique no anime e pronto!'),
                                            thumbnail_url='https://99designs-blog.imgix.net/blog/wp-content/uploads'
