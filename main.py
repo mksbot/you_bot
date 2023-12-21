@@ -6,7 +6,7 @@ import time
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 from telebot.util import quick_markup
-
+from fun.solicitacoes import restart
 from filters import bind_filters
 from fun.arquivos_texto import registro, abrir_reg
 import requests
@@ -31,7 +31,7 @@ async def start_command_handler(message: types.Message):
 
 @bot.message_handler(commands='QUITT')
 async def start_command_handler(message: types.Message):
-    quit()
+    restart()
 
 
 async def calendario_a():
