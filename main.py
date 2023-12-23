@@ -6,7 +6,7 @@ import time
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 
-from fun.solicitacoes import restart, calendario_a, noticias
+from fun.solicitacoes import restart, calendario_a, noticias, hentais
 from filters import bind_filters
 
 
@@ -24,7 +24,7 @@ bot2 = telebot.TeleBot(API_TOKEN[1])
 @bot.message_handler(commands='start')
 async def start_command_handler(message: types.Message):
     await bot.send_message(message.chat.id,
-                           f"Ola {message.from_user.first_name}. Para usat este bot entre no nosso grupo:\n https://t.me/+eGIsvENJighiNGNh ")
+                           f"Ola {message.from_user.first_name}! Para usar este bot entre no nosso grupo De animes:\n https://t.me/+eGIsvENJighiNGNh ")
 
 
 @bot.message_handler(commands='QUITT')
@@ -37,6 +37,9 @@ async def start_command_handler(message: types.Message):
     restart()
 
 
+@bot.message_handler(commands='Enviar')
+async def start_command_handler(message: types.Message):
+    await hentais()
 
 # -*- coding: utf-8 -*-
 """

@@ -4,11 +4,11 @@ import sys
 import subprocess
 import os
 from time import sleep
-
 import requests
 import telebot
 from bs4 import BeautifulSoup
 from colorama import Fore, Back, Style
+from telebot import formatting
 from telebot.util import quick_markup
 from fun.arquivos_texto import abrir_reg, registro
 from keyboards import botao
@@ -18,9 +18,123 @@ cor = [Fore.LIGHTYELLOW_EX + Back.BLACK, Fore.LIGHTBLUE_EX + Back.BLACK, Fore.GR
 r = [Fore.RESET, Style.RESET_ALL, Back.RESET]
 API_TOKEN = ['6812826133:AAHTh_ZzbOSXeKjAedxwpPKJMeuMt6AT-o8',
              '6859056897:AAFAhdg80DyiYjBX3lIKBzZ-xWaRqDDQGQ8']
-
+hesders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
+                  'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 bot1 = telebot.TeleBot(API_TOKEN[0])
 bot2 = telebot.TeleBot(API_TOKEN[1])
+
+
+async def hentais():
+    for w in range(0, int(abrir_reg('page_num'))):
+        page_num = int(abrir_reg('page_num'))
+        chat = -1002073463326
+        if page_num == 0:
+            page = f'https://animeshentai.biz/hentai/'
+        else:
+            page = f'https://animeshentai.biz/hentai/page/{page_num}/'
+        print(page)
+        site = requests.get(page, headers=hesders)
+        soup = BeautifulSoup(site.content, 'html.parser')
+        magnet = soup.find_all('div', class_='animation-2 items')
+        for div in magnet[0]:
+            if 'http' in str(div.div.a['href']):
+                page2 = div.div.a['href']
+            else:
+                page2 = f'https://animeshentai.biz{div.div.a["href"]}'
+            print(page2)
+            site = requests.get(page2, headers=hesders)
+            soup = BeautifulSoup(site.content, 'html.parser')
+            magnet2 = soup.find('div', class_='sgeneros')
+            tags = []
+            for t in magnet2:
+                tags.append(f'{t.text}'.replace(' ', "_"))
+            tags = str(tags[1:]).replace('[', '#').replace(']', '').replace(', ', ' #').replace("'", '')
+            soup = BeautifulSoup(site.content, 'html.parser')
+            magnet2 = soup.find_all('div', class_='content')
+            for div2 in magnet2:
+                try:
+                    capa = div2.img['src']
+                except:
+                    pass
+                else:
+                    titulo = div2.img['alt']
+                    sinopse = div2.p.text
+                    print(titulo)
+                    try:
+                        reg = abrir_reg('hentais')
+                    except:
+                        registro(titulo, 'hentais', 'nao')
+                        reg = abrir_reg('hentais')
+
+                    if titulo not in reg:
+                        epsodios = {}
+                        cont = 1
+                        for c in div2:
+                            try:
+                                eps = c.ul
+                            except:
+                                pass
+                            else:
+                                if eps:
+                                    for ep in eps:
+                                        if ep.div.a:
+                                            imagem = ep.div.a.img['src']
+                                            player = ep.div.a['href']
+
+                                            page3 = player
+                                            site = requests.get(page3, headers=hesders)
+                                            soup = BeautifulSoup(site.content, 'html.parser')
+                                            magnet3 = soup.find_all('iframe', class_='metaframe rptss')
+                                            link = magnet3[0]['src']
+                                            epsodios[f'Episodio {cont}'] = [imagem, link]
+                        await asyncio.sleep(random.randint(0, 300))
+                        if page_num % 2 == 0:
+                            marckup = bot1.send_photo(chat, capa, caption=formatting.format_text(
+                                formatting.mcode(f"{titulo}").upper(),
+                                formatting.escape_markdown(f'SINOPSE: {sinopse}'),
+                                formatting.mbold(tags),
+                                separator="\n\n"
+                            ),
+                                                      parse_mode='MarkdownV2'
+                                                      )
+                            cont2 = 0
+                            for chave in epsodios:
+                                ep = chave
+                                imagem, link = epsodios[chave]
+                                print(imagem)
+                                print(link)
+                                print(ep)
+
+                                bot1.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
+                                                reply_to_message_id=marckup.id)
+                                registro(titulo, 'hentais', 'nao')
+                                cont2 += 1
+                        else:
+                            marckup = bot2.send_photo(chat, capa, caption=formatting.format_text(
+                                formatting.mcode(f"{titulo}").upper(),
+                                formatting.escape_markdown(f'SINOPSE: {sinopse}'),
+                                formatting.mbold(tags),
+                                separator="\n\n"
+                            ),
+                                                      parse_mode='MarkdownV2'
+                                                      )
+                            cont2 = 0
+                            for chave in epsodios:
+                                ep = chave
+                                imagem, link = epsodios[chave]
+                                print(imagem)
+                                print(link)
+                                print(ep)
+
+                                bot2.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
+                                                reply_to_message_id=marckup.id)
+                                registro(titulo, 'hentais', 'nao')
+                                cont2 += 1
+                    else:
+                        print('Ja foi!!')
+        page_num -= 1
+        registro(page_num, 'page_num')
 
 
 async def noticias():
@@ -28,10 +142,6 @@ async def noticias():
     chat = -1002000136655
     page = f'https://vocesabianime.com/'
     print(page)
-    hesders = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
-                      'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
-
     site = requests.get(page, headers=hesders)
     soup = BeautifulSoup(site.content, 'html.parser')
     magnet2 = soup.find_all('div', class_='ultp-block-items-wrap ultp-block-row ultp-pg1a-style1 ultp-block-column-3 '
@@ -47,7 +157,7 @@ async def noticias():
             try:
                 reg = abrir_reg('noticias')
             except:
-                registro(titulo, 'noticias','nao')
+                registro(titulo, 'noticias', 'nao')
                 reg = abrir_reg('noticias')
 
             if titulo not in reg:
@@ -61,7 +171,7 @@ async def noticias():
 
 
 if __name__ == '__main__':
-    noticias()
+    hentais()
 
 
 async def calendario_a():
@@ -105,10 +215,10 @@ async def calendario_a():
         descriçao = (f'> Fonte--1'
                      f'\n\n'
                      f'     ✅{nome}\n'
-                     f'{"_" * (len(nome) + 10)}\n\n'
+                     f'{"_" * 25}\n\n'
                      f'#{tag[:24].replace("__", "_")}..\n'
                      f'🎞{episodio}   |   '
-                     f'🇧🇷{idioma}'
+                     f'🇧🇷 #{idioma}'
                      )
         # print(descriçao)
         try:
@@ -151,9 +261,6 @@ async def calendario_a():
     # ANIMES DUBLADO
     page = f'https://animefire.plus'
     print(page)
-    hesders = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
-                      'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
     site = requests.get(page, headers=hesders)
     soup = BeautifulSoup(site.content, 'html.parser')
     magnet2 = soup.find_all('div', class_='row ml-1 mr-1 mr-md-2')
@@ -183,7 +290,7 @@ async def calendario_a():
         descriçao = (f'> Fonte--2'
                      f'\n\n'
                      f'     ✅{nome}\n'
-                     f'{"_" * (len(nome) + 10)}\n\n'
+                     f'{"_" * 25}\n\n'
                      f'#{tag[:24].replace("__", "_")}..\n'
                      f'🎞{episodio}   |   '
                      f'🇧🇷{idioma}'
