@@ -33,7 +33,7 @@ async def hentais():
             page = f'https://animeshentai.biz/hentai/'
         else:
             page = f'https://animeshentai.biz/hentai/page/{page_num}/'
-        print(page)
+        print('>> ',page)
         site = requests.get(page, headers=hesders)
         soup = BeautifulSoup(site.content, 'html.parser')
         magnet = soup.find_all('div', class_='animation-2 items')
@@ -81,15 +81,15 @@ async def hentais():
                                         if ep.div.a:
                                             imagem = ep.div.a.img['src']
                                             player = ep.div.a['href']
-                                            print(imagem)
 
                                             page3 = player
                                             site = requests.get(page3, headers=hesders)
                                             soup = BeautifulSoup(site.content, 'html.parser')
                                             magnet3 = soup.find_all('iframe', class_='metaframe rptss')
                                             link = magnet3[0]['src']
-                                            print(link)
+
                                             epsodios[f'Episodio {cont}'] = [imagem, link]
+                                            cont += 1
 
                         if page_num % 2 == 0:
                             marckup = bot1.send_photo(chat, capa, caption=formatting.format_text(
@@ -100,7 +100,6 @@ async def hentais():
                             ),
                                                       parse_mode='MarkdownV2'
                                                       )
-                            cont2 = 0
                             for chave in epsodios:
                                 ep = chave
                                 imagem, link = epsodios[chave]
@@ -111,7 +110,7 @@ async def hentais():
                                 bot1.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
                                                 reply_to_message_id=marckup.id)
                                 registro(titulo, 'hentais', 'nao')
-                                cont2 += 1
+
                         else:
                             marckup = bot2.send_photo(chat, capa, caption=formatting.format_text(
                                 formatting.mcode(f"{titulo}").upper(),
@@ -121,7 +120,7 @@ async def hentais():
                             ),
                                                       parse_mode='MarkdownV2'
                                                       )
-                            cont2 = 0
+
                             for chave in epsodios:
                                 ep = chave
                                 imagem, link = epsodios[chave]
@@ -132,10 +131,10 @@ async def hentais():
                                 bot2.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
                                                 reply_to_message_id=marckup.id)
                                 registro(titulo, 'hentais', 'nao')
-                                cont2 += 1
+
+                        await asyncio.sleep(random.randint(0, 500))
                     else:
                         print('Ja foi!!')
-                    await asyncio.sleep(random.randint(0, 300))
         page_num -= 1
         registro(page_num, 'page_num')
 
