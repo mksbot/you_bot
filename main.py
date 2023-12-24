@@ -1,5 +1,8 @@
 import asyncio
+import os
 import random
+import sys
+
 import telebot
 import time
 
@@ -24,13 +27,17 @@ bot2 = telebot.TeleBot(API_TOKEN[1])
 @bot.message_handler(commands='start')
 async def start_command_handler(message: types.Message):
     await bot.send_message(message.chat.id,
-                           f"Ola {message.from_user.first_name}! Para usar este bot entre no nosso grupo De animes:\n https://t.me/+eGIsvENJighiNGNh ")
+                           f"Ola {message.from_user.first_name}!! Para usar este bot entre no nosso grupo De animes:\n https://t.me/+eGIsvENJighiNGNh ")
 
 
 @bot.message_handler(commands='QUITT')
 async def start_command_handler(message: types.Message):
     quit()
 
+
+@bot.message_handler(commands='Parar')
+async def start_command_handler(message: types.Message):
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 @bot.message_handler(commands='RR')
 async def start_command_handler(message: types.Message):
