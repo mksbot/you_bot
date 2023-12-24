@@ -172,10 +172,6 @@ async def noticias():
                 registro(titulo, 'noticias', 'nao')
 
 
-if __name__ == '__main__':
-    hentais()
-
-
 async def calendario_a():
     chat_testes = -1002073463326
     chat = -1002000136655
@@ -363,6 +359,7 @@ async def calendario_a():
 
 def restart():
     # Run the git pull command
+
     result = subprocess.run(["git", "pull"], stdout=subprocess.PIPE)
     # Check the exit code of the command
     if result.returncode != 0:
