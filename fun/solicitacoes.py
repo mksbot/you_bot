@@ -81,14 +81,16 @@ async def hentais():
                                         if ep.div.a:
                                             imagem = ep.div.a.img['src']
                                             player = ep.div.a['href']
+                                            print(imagem)
 
                                             page3 = player
                                             site = requests.get(page3, headers=hesders)
                                             soup = BeautifulSoup(site.content, 'html.parser')
                                             magnet3 = soup.find_all('iframe', class_='metaframe rptss')
                                             link = magnet3[0]['src']
+                                            print(link)
                                             epsodios[f'Episodio {cont}'] = [imagem, link]
-                        await asyncio.sleep(random.randint(0, 300))
+
                         if page_num % 2 == 0:
                             marckup = bot1.send_photo(chat, capa, caption=formatting.format_text(
                                 formatting.mcode(f"{titulo}").upper(),
@@ -133,6 +135,7 @@ async def hentais():
                                 cont2 += 1
                     else:
                         print('Ja foi!!')
+                    await asyncio.sleep(random.randint(0, 300))
         page_num -= 1
         registro(page_num, 'page_num')
 
