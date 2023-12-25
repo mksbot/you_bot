@@ -93,7 +93,7 @@ async def xxx():
                                             parse_mode='MarkdownV2',
                                             reply_markup=botao('Assistir', link))
                         registro(f'{titulo}', 'xxx', 'nao')
-                        await anyio.sleep(10)
+                        await anyio.sleep(55)
 
                     else:
                         print('ja foi !')
