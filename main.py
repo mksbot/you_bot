@@ -9,6 +9,7 @@ import time
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 
+from fun.adultos import xxx
 from fun.solicitacoes import restart, calendario_a, noticias, hentais
 from filters import bind_filters
 
@@ -47,6 +48,11 @@ async def start_command_handler(message: types.Message):
 @bot.message_handler(commands='Enviar')
 async def start_command_handler(message: types.Message):
     await hentais()
+
+
+@bot.message_handler(commands='EP')
+async def start_command_handler(message: types.Message):
+    await xxx()
 
 # -*- coding: utf-8 -*-
 """
