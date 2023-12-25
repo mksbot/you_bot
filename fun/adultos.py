@@ -4,98 +4,131 @@ import anyio
 import requests
 from bs4 import BeautifulSoup
 from deep_translator import GoogleTranslator
-from telebot import formatting
+from telebot import formatting, types
 
 from fun.arquivos_texto import abrir_reg, registro
 from fun.solicitacoes import hesders, bot2, bot1
 from keyboards import botao
 
 tradutor = GoogleTranslator(source="en", target="portuguese")
+# page_num = int(abrir_reg('page_num_xxx'))
+page_num = 0
+chat = -1002086116283
 
 
-async def xxx():
-    page_num = int(abrir_reg('page_num_xxx'))
-    while True:
+def inline_xxx(texto):
+    page = f'https://www.pornomineiro.com/?s={texto.replace(".p ", "").replace(" ", "-")}'
+    print(page)
+    hesders = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) '
+                      'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51'}
 
-        chat = -1002086116283
+    site = requests.get(page, headers=hesders)
+    soup = BeautifulSoup(site.content, 'html.parser')
+    magnet2 = soup.find_all('section', class_='pst-cn clma06c04d03')
+    lista_inline = []
+    for v in magnet2[:10]:
+        lista_inline2 = []
+        link = v.figure.a['href']
+        titulo = tradutor.translate(v.figure.img['alt'])
+        imagem = v.figure.img['src']
+        lista_inline2.append(titulo)
+        lista_inline2.append(str(imagem))
+        lista_inline2.append(link)
+        lista_inline.append(lista_inline2)
+    # if len(magnet2[0]) - 3 >= 46:
+    #     page = f'https://animefire.plus/pesquisar/{str(texto).replace(" ", "-")}/2'
+    #     site = requests.get(page, headers=hesders)
+    #     soup = BeautifulSoup(site.content, 'html.parser')
+    #     magnet2 = soup.find_all('div', class_='row ml-1 mr-1')
+    #     for v in magnet2[0]:
+    #         try:
+    #             nome = str(v['title']).replace('- Todos os Episódios', '')
+    #         except:
+    #             pass
+    #         else:
+    #             lista_inline2 = []
+    #             link = v.a['href']
+    #             imagem = v.a.img['data-src']
+    #
+    #             lista_inline2.append(nome)
+    #             lista_inline2.append(imagem)
+    #             lista_inline2.append(link)
+    #             lista_inline.append(lista_inline2)
 
-        if page_num == 0:
-            page = f'https://m.tnaflix.com'
-        else:
-            page = f'https://www.tnaflix.com/featured/{page_num}'
-        print('>> ', page)
-        site = requests.get(page, headers=hesders)
-        soup = BeautifulSoup(site.content, 'html.parser')
-        magnet = soup.find_all('li')
-        for div in magnet:
-            try:
-                page2 = div['data-vid']
-            except:
-                pass
-            else:
-                try:
-                    titulo = tradutor.translate(str(div['data-name']))
-                    imagem = div['data-trailer']
-                    page2 = page + div.a['href']
-                    try:
-                        reg = abrir_reg('xxx')
-                    except:
-                        registro(f'{titulo}', 'xxx', 'nao')
-                        reg = abrir_reg('xxx')
-                    print(page2)
-                except:
-                    pass
-                else:
-                    print(titulo)
-                    if titulo not in reg:
-                        site2 = requests.get(page2, headers=hesders)
-                        soup = BeautifulSoup(site2.content, 'html.parser')
-                        magnet = soup.find_all('a', class_='video-link-detailed no_ajax')
-                        tags = []
-                        for f in magnet:
-                            try:
-                                texto = str(f.text)
-                            except:
-                                pass
-                            else:
-                                if texto not in '':
-                                    tags.append(tradutor.translate(texto.strip().replace(' ', '_')))
-                        tags = str(tags).replace("'", '').replace(', ', '  #').replace('[', '#').replace(']', '')
+    pesquisar = lista_inline
+    itens = []
+    for n, v in enumerate(pesquisar):
+        titulo, thumbnail_url, url = pesquisar[n]
+        print(titulo)
+        itens.append(types.InlineQueryResultArticle(f'{n}', f'{titulo}',
+                                                    types.InputTextMessageContent(url),
+                                                    thumbnail_url=f'{thumbnail_url}',thumbnail_width='600'))
 
-                        site2 = requests.get(page2, headers=hesders)
-                        soup = BeautifulSoup(site2.content, 'html.parser')
-                        magnet = soup.find_all('meta', itemprop='embedUrl')
-                        page3 = magnet[0]['content']
+    return itens
 
-                        site3 = requests.get(page3, headers=hesders)
-                        soup = BeautifulSoup(site3.content, 'html.parser')
-                        magnet = soup.find_all('script', type='text/javascript')
-                        d = magnet[0]
-                        num = str(d).find('config')
-                        nun2 = str(d).find('"', num + 20)
-                        page4 = 'https:' + str(d)[num + 10:nun2]
-                        print(page4)
-                        site4 = requests.get(page4, headers=hesders, verify=False)
-                        link = str(site4.text)
-                        num = link.rfind(']]></videoLink>')
-                        link = link[:num]
-                        nun2 = link.rfind('A[') + 2
-                        link = 'https:' + link[nun2:].replace('https:', '')
-                        print(link)
-                        if page_num % 2 == 0:
-                            bot2.send_video(chat, imagem, caption=formatting.mbold(f'❇️ {titulo}\n\n'
-                                                                                   f'{tags}'),
-                                            parse_mode='MarkdownV2',
-                                            reply_markup=botao('Assistir', link))
-                        else:
-                            bot1.send_video(chat, imagem, caption=formatting.mbold(f'❇️ {titulo}\n\n'
-                                                                                   f'{tags}'),
-                                            parse_mode='MarkdownV2',
-                                            reply_markup=botao('Assistir', link))
-                        registro(f'{titulo}', 'xxx', 'nao')
-                        await anyio.sleep(55)
 
-                    else:
-                        print('ja foi !')
-        page_num += 1
-        registro(page_num, 'page_num_xxx')
+def xxx(page):
+    print('>> ', page)
+    site = requests.get(page, headers=hesders)
+    soup = BeautifulSoup(site.content, 'html.parser')
+    magnet = soup.find_all('section', class_='pst-cn clma06c04d03')
+    for it in magnet:
+        page2 = it.figure.a['href']
+        titulo = it.figure.img['alt']
+        imagem = it.figure.img['src']
+        print(titulo)
+        print(imagem)
+        xxx_player(page2, titulo, imagem)
+
+
+def xxx_player(page2, titulo, imagem):
+    print(titulo)
+    try:
+        reg = abrir_reg('xxx')
+    except:
+        registro(f'{titulo}', 'xxx', 'nao')
+        reg = abrir_reg('xxx')
+    if titulo not in reg:
+        site2 = requests.get(page2, headers=hesders)
+        soup = BeautifulSoup(site2.content, 'html.parser')
+        magnet = soup.find_all('p')
+        tags = []
+        link = magnet[1].iframe['src']
+        for t in magnet[3]:
+            tags.append(tradutor.translate(t.text.strip().replace(' ', '_')))
+        for t in magnet[4]:
+            tags.append(tradutor.translate(t.text.strip().replace(' ', '_')))
+
+        tags = str(tags).replace(
+            "'", '').replace(
+            ", ", ' #').replace(
+            '[', '#').replace(
+            ']', '').replace(
+            '# ', '').replace(
+            '#Categorias: ', '').replace(
+            '#Atriz_Pornô: ', '')
+        print(tags)
+
+        print(link)
+
+        bot2.send_photo(chat, imagem, caption=formatting.mbold(f'❇️ {titulo}\n\n'
+                                                                   f'{tags}'),
+                            parse_mode='MarkdownV2',
+                            reply_markup=botao('Assistir', link))
+
+        # bot1.send_video(chat, imagem, caption=formatting.mbold(f'❇️ {titulo}\n\n'
+        #                                                            f'{tags}'),
+        #                     parse_mode='MarkdownV2',
+        #                     reply_markup=botao('Assistir', link))
+        registro(f'{titulo}', 'xxx', 'nao')
+        time.sleep(5)
+
+    else:
+        print('ja foi !')
+    # page_num += 1
+    # registro(page_num, 'page_num_xxx')
+
+
+if __name__ == '__main__':
+    inline_xxx('.PN')

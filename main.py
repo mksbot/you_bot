@@ -9,7 +9,7 @@ import time
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 
-from fun.adultos import xxx
+from fun.adultos import xxx, inline_xxx
 from fun.solicitacoes import restart, calendario_a, noticias, hentais
 from filters import bind_filters
 
@@ -66,8 +66,10 @@ print('ESPERANDO..')
 @bot.inline_handler(lambda query: query.query)
 async def query_text(inline_query):
     try:
-
-        await bot.answer_inline_query(inline_query.id, pesquisas(inline_query.query))
+        if '.p' in inline_query.query:
+            await bot.answer_inline_query(inline_query.id, inline_xxx(inline_query.query))
+        else:
+            await bot.answer_inline_query(inline_query.id, pesquisas(inline_query.query))
     except Exception as e:
         print(e)
 
@@ -77,6 +79,15 @@ async def query_text(inline_query):
 async def products_command_handler(message: types.Message):
     print(message.chat.id)
     texto = message.text
+    if 'pornomineiro' in texto:
+        markup = await bot.reply_to(message, 'Analizando o link.... ⏳'.upper())
+        await bot.delete_message(message.chat.id, message.id)
+        await asyncio.sleep(1.5)
+        await bot.edit_message_text('🌐 Enviando....♻️'.upper(), markup.chat.id,
+                                    markup.message_id)
+        await xxx(texto)
+        await bot.edit_message_text('🧿 Enviado com Sucesso ✔️', markup.chat.id, markup.message_id)
+        await bot.reply_to(markup, ' ✅'.upper())
     if 'animefire' in texto:
         markup = await bot.reply_to(message, 'Analizando o link.... ⏳'.upper())
         await bot.delete_message(message.chat.id, message.id)
