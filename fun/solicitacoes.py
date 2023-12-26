@@ -94,7 +94,7 @@ async def hentais():
                         if page_num % 2 == 0:
                             marckup = bot1.send_photo(chat, capa, caption=formatting.format_text(
                                 formatting.mcode(f"{titulo}").upper(),
-                                formatting.escape_markdown(f'SINOPSE: {sinopse[:500]}'),
+                                formatting.escape_markdown(f'SINOPSE: {sinopse[:500]}...'),
                                 formatting.mbold(tags),
                                 separator="\n\n"
                             ),
@@ -115,7 +115,7 @@ async def hentais():
                         else:
                             marckup = bot2.send_photo(chat, capa, caption=formatting.format_text(
                                 formatting.mcode(f"{titulo}").upper(),
-                                formatting.escape_markdown(f'SINOPSE: {sinopse[:500]}..'),
+                                formatting.escape_markdown(f'SINOPSE: {sinopse[:500]}...'),
                                 formatting.mbold(tags),
                                 separator="\n\n"
                             ),
