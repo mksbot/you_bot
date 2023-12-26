@@ -114,7 +114,7 @@ async def hentais():
                         else:
                             marckup = bot2.send_photo(chat, capa, caption=formatting.format_text(
                                 formatting.mcode(f"{titulo}").upper(),
-                                formatting.escape_markdown(f'SINOPSE: {sinopse[:300]}'),
+                                formatting.escape_markdown(f'SINOPSE: {sinopse[:290]}..'),
                                 formatting.mbold(tags),
                                 separator="\n\n"
                             ),
