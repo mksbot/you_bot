@@ -59,7 +59,7 @@ async def hentais():
                     pass
                 else:
                     titulo = div2.img['alt']
-                    sinopse = div2.p.text
+                    sinopse = str(div2.p.text)
                     print(titulo)
                     try:
                         reg = abrir_reg('hentais')
@@ -114,7 +114,7 @@ async def hentais():
                         else:
                             marckup = bot2.send_photo(chat, capa, caption=formatting.format_text(
                                 formatting.mcode(f"{titulo}").upper(),
-                                formatting.escape_markdown(f'SINOPSE: {sinopse[:3500]}'),
+                                formatting.escape_markdown(f'SINOPSE: {sinopse[:300]}'),
                                 formatting.mbold(tags),
                                 separator="\n\n"
                             ),
