@@ -52,7 +52,7 @@ async def start_command_handler(message: types.Message):
 
 @bot.message_handler(commands='EP')
 async def start_command_handler(message: types.Message):
-    await xxx()
+    await divulgar()
 
 # -*- coding: utf-8 -*-
 """
