@@ -22,15 +22,16 @@ async def compartilhar():
             if "link" in dialog.name or "Link" in dialog.name or "LINK" in dialog.name:
                 if 'Parceiros' not in dialog.name:
                     print(dialog.name)
-                    await client.send_message(-1002046050468, message='Animes hentai 👇✨\n'
-                                                                      'https://t.me/+YQcQI3jNhvA5MWFh\n\n'
-                                                                      'Grupo de animes👇✨\n'
-                                                                      'https://t.me/+eGIsvENJighiNGNh\n\n'
-                                                                      'Crupo novo 👇✨\n'
-                                                                      'https://t.me/+Q14A4CSfZFo5ZWI5'
+                    await client.send_message(dialog.id, message='Animes hentai 👇✨\n'
+                                                                 'https://t.me/+YQcQI3jNhvA5MWFh\n\n'
+                                                                 'Grupo de animes👇✨\n'
+                                                                 'https://t.me/+eGIsvENJighiNGNh\n\n'
+                                                                 'Crupo novo 👇✨\n'
+                                                                 'https://t.me/+Q14A4CSfZFo5ZWI5'
                                               )
                     await asyncio.sleep(1)
         await asyncio.sleep(3600)
+
 
 with client:
     client.loop.run_until_complete(compartilhar())
