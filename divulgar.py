@@ -15,7 +15,6 @@ api_hash = '419b473e8797968bb157b29bffa1ee45'
 client = TelegramClient('upalto', api_id, api_hash)
 
 lista = [c for c in range(0, 1010)]
-print(lista)
 async def compartilhar():
     async for dialog in client.iter_dialogs():
 
