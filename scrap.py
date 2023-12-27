@@ -1,0 +1,2 @@
+b ='Continuação do hentai Taimanin Asagi 2. Kyousuke ta doido pra comer a Asagi e parte para o ataque a fim de conseguir tal façanha. No entanto, nem tudo são flores no mundo dos Ninjas Caçadores de Demônios. Será Kyousuke vai conseguir comer Asagi ?, ou será que seu futuro será muito terrível ?'
+print(len(b))

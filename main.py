@@ -9,7 +9,7 @@ import time
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 
-from divulgar import compartilhar
+from divulgar import iniciar
 from fun.adultos import xxx, inline_xxx
 from fun.solicitacoes import restart, calendario_a, noticias, hentais
 from filters import bind_filters
@@ -53,7 +53,7 @@ async def start_command_handler(message: types.Message):
 
 @bot.message_handler(commands='divulgar')
 async def start_command_handler(message: types.Message):
-    await compartilhar()
+    await iniciar()
 
 # -*- coding: utf-8 -*-
 """
