@@ -1,9 +1,5 @@
 import asyncio
-import os
-from fun import arquivos_texto
-from time import sleep
-from random import randint
-from telethon import TelegramClient, events, Button
+from telethon import TelegramClient
 import logging
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -15,6 +11,8 @@ api_hash = '419b473e8797968bb157b29bffa1ee45'
 client = TelegramClient('upalto', api_id, api_hash)
 
 lista = [c for c in range(0, 1010)]
+
+
 async def compartilhar():
     async for dialog in client.iter_dialogs():
 
@@ -33,6 +31,5 @@ async def compartilhar():
 
 async def iniciar():
     for c in lista:
-        with client:
-            client.loop.run_until_complete(compartilhar())
+        await compartilhar()
         await asyncio.sleep(3600)
