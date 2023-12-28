@@ -110,7 +110,7 @@ async def hentais():
 
                                 bot1.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
                                                 reply_to_message_id=marckup.id)
-                                registro(titulo, 'hentais', 'nao')
+                                # registro(titulo, 'hentais', 'nao')
 
                         else:
                             marckup = bot2.send_photo(chat, capa, caption=formatting.format_text(
@@ -129,8 +129,8 @@ async def hentais():
                                 print(link)
                                 print(ep)
 
-                                bot2.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
-                                                reply_to_message_id=marckup.id)
+                                # bot2.send_photo(chat, photo=imagem, reply_markup=botao(ep, link),
+                                #                 reply_to_message_id=marckup.id)
                                 registro(titulo, 'hentais', 'nao')
 
                         await asyncio.sleep(random.randint(0, 500))
@@ -169,7 +169,7 @@ async def noticias():
                              f'\n\n👁‍🗨 {titulo}\n\n'
                              f'#{categoria.replace(" ", "_")}')
                 print(f'Enviando: {titulo}')
-                bot2.send_photo(chat, imagem, caption=descriçao, reply_markup=botao('Saiba Mais', link))
+                # bot2.send_photo(chat, imagem, caption=descriçao, reply_markup=botao('Saiba Mais', link))
                 registro(titulo, 'noticias', 'nao')
 
 
@@ -351,10 +351,10 @@ async def calendario_a():
             print(nomer)
             print('>> ENVIANDO !!')
             await asyncio.sleep(random.randint(0, 1))
-            if num % 2 == 0:
-                bot2.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
-            else:
-                bot1.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
+            # if num % 2 == 0:
+            #     bot2.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
+            # else:
+            #     bot1.send_photo(chat, f'{imagem}', caption=f'{descriçao}', reply_markup=botao)
             registro(f'{nomer}', 'animes', 'nao')
 
 
